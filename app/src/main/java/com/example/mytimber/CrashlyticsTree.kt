@@ -4,7 +4,10 @@ import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
 
-class CrashlyticsTree : Timber.Tree() {
+class CrashlyticsTree : Timber.DebugTree() {
+
+    override fun createStackElementTag(element: StackTraceElement) =
+        "(${element.fileName}:${element.lineNumber}) ${element.methodName}"
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (priority == Log.VERBOSE || priority == Log.DEBUG) {
