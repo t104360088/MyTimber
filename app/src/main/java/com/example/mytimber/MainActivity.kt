@@ -2,6 +2,7 @@ package com.example.mytimber
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -9,8 +10,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Timber.d("Hello Timber")
+        findViewById<Button>(R.id.btn_log).setOnClickListener {
+            Timber.i("info")
+        }
 
-        throw RuntimeException("Test") // Force a crash
+        findViewById<Button>(R.id.btn_exception).setOnClickListener {
+            try {
+                throw RuntimeException("Expected exception")
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
+
+        findViewById<Button>(R.id.btn_unexpected_exception).setOnClickListener {
+            throw RuntimeException("Unexpected exception")
+        }
     }
 }
